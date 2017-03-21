@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Recibe</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; font-size:20px}
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%;     height: 100px;     font-size: 30px; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    </style>
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="https://cdn.jsdelivr.net/clipboard.js/1.6.0/clipboard.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+	
+	<script>
+
+  $(function () {
+	new Clipboard('.btn');
+    var socket = io();    
+    socket.on('chat message', function(msg,usu){
+		var u = $('#u').val();
+		if(u==usu){		
+			$('#foo').val(msg);
+			//alert(msg);
+			//window.prompt("Copy to clipboard: Ctrl+C, Enter", msg);
+			//$('#messages').append($('<li>').text(usu+':'+msg));		
+			myid = msg;
+			$('#messages').append('<div class="input-group"><input type="text" class="form-control" id="'+myid+'" placeholder="esperando..." value="' +msg+'"> <span class="input-group-btn"> <button class="btn btn-default" data-clipboard-target="#'+myid+'" type="button">Copiar</button>  </span>	</div>');
+			
+		}
+      
+    });
+  });
+</script>
+  </head>
+  <body>
+	<div class="container" >		
+		<div class="row">
+			<div class="col-md-12" id="messages">
+			</div>
+		</div>
+		
+		<form action="">      
+		  <label style="color:#fff">usuario</label><input id="u" autocomplete="off" />
+		</form>
+	</div>
+  </body>
+</html>
