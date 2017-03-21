@@ -21,16 +21,20 @@
 	<script>
 
   $(function () {
+  
+	var u = prompt("Ingrese el receptor", "");
+	 $('#u').text(u);
 	new Clipboard('.btn');
     var socket = io();    
     socket.on('chat message', function(msg,usu){
-		var u = $('#u').val();
+		//var u = $('#u').val();
 		if(u==usu){		
 			$('#foo').val(msg);
 			//alert(msg);
 			//window.prompt("Copy to clipboard: Ctrl+C, Enter", msg);
 			//$('#messages').append($('<li>').text(usu+':'+msg));		
-			myid = msg;
+			myid = new Date();
+			myid = 'id'+Number(myid);
 			$('#messages').append('<div class="input-group"><input type="text" class="form-control" id="'+myid+'" placeholder="esperando..." value="' +msg+'"> <span class="input-group-btn"> <button class="btn btn-default" data-clipboard-target="#'+myid+'" type="button">Copiar</button>  </span>	</div>');
 			
 		}
@@ -42,13 +46,15 @@
   <body>
 	<div class="container" >		
 		<div class="row">
+			<div class="col-md-12" >
+				<h3>Receptor:<span id="u"></span></h3>
+			</div>
+		</div>	
+		<div class="row">
 			<div class="col-md-12" id="messages">
 			</div>
-		</div>
+		</div>	
 		
-		<form action="">      
-		  <label style="color:#fff">usuario</label><input id="u" autocomplete="off" />
-		</form>
 	</div>
   </body>
 </html>
